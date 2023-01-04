@@ -2,12 +2,9 @@ package cars.service.carService.car;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Query;
-
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -24,6 +21,7 @@ public class CarController {
     public List<Car> search(@RequestParam Map<String, String> params, @RequestParam(value = "search") String search) {
         params.remove("search");
         System.out.println("Angular params: " + params);
+        System.out.println("Search params: " + search);
         for (int i = 0; i < params.size(); i++) {
             System.out.println(params.keySet().toArray()[i]);
             if(params.keySet().toArray()[i].equals("yearFrom")){
@@ -56,10 +54,7 @@ public class CarController {
                 }
             }
 
-
-
         }
-        System.out.println(search);
         CarSpecificationBuilder builder = new CarSpecificationBuilder();
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),", Pattern.UNICODE_CHARACTER_CLASS);
         Matcher matcher = pattern.matcher(search + ",");
@@ -68,7 +63,7 @@ public class CarController {
         }
 
         Specification<Car> spec = builder.build();
-        if (search != null) {
+        if (params != null) {
             return carRepository.findAll(spec);
         }
         return carRepository.findAll();
