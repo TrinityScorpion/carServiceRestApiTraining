@@ -15,9 +15,10 @@ jobs:
       - image: circleci/openjdk:8.0
       - image: circleci/mysql:8.0
           environment:
+            MYSQL_DATABASE: mylocaldatabase
+
             MYSQL_ROOT_USER: root
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: mylocaldatabase
 
           working_directory: ~/carService
 
